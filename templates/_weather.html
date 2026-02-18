@@ -31,6 +31,22 @@
     </form>
   </div>
 
+  {% with messages = get_flashed_messages(with_categories=true) %} {% if
+  messages %} {% for category, msg in messages %}
+  <div
+    class="alert alert-{{ category }} alert-dismissible fade show alert-custom"
+    role="alert"
+  >
+    {{ msg }}
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="alert"
+      aria-label="Close"
+    ></button>
+  </div>
+  {% endfor %} {% endif %} {% endwith %}
+
   <div class="row g-4">
     <div class="col-md-4">
       <div class="weather-card">

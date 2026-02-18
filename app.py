@@ -142,10 +142,18 @@ def get_weather(city):
 def home():
   if request.method == 'POST':
     city = request.form.get('city')
+    if not city:
+      flash('Devi inserire una città!', 'warning')
+      return redirect(url_for('home'))
   else:
     city = 'Roma,it'
   
   weather = get_weather(city)
+  
+  # check if the city exists
+  if weather is None:
+    flash('Città non trovata. Controlla il nome.', 'warning')
+    return redirect(url_for('home'))
   
   username = controlSession()
   if username:
