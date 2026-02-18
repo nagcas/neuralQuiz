@@ -1,0 +1,75 @@
+{% extends "base.html" %} {% block title %}Registrazione - NeuralNet{% endblock
+%} {% block content %}
+<section
+  class="container d-flex justify-content-center align-items-center"
+  style="min-height: 100vh"
+>
+  <div class="col-md-5">
+    <div class="auth-card">
+      <h3 class="text-center fw-bold mb-4">Registrazione</h3>
+      <p class="text-center mb-4">Crea il tuo profilo</p>
+
+      <form method="post">
+        <div class="mb-3">
+          <label class="form-label small">USERNAME</label>
+          <input
+            type="text"
+            name="username"
+            class="form-control"
+            placeholder="Choose username"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label small">PASSWORD</label>
+          <input
+            type="password"
+            name="password"
+            class="form-control"
+            placeholder="Crea password"
+          />
+        </div>
+
+        <div class="mb-4">
+          <label class="form-label small">CONFERMA PASSWORD</label>
+          <input
+            type="password"
+            name="confirm_password"
+            class="form-control"
+            placeholder="Ripeti password"
+          />
+        </div>
+
+        <button class="btn btn-custom w-100">Registrati</button>
+      </form>
+
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if
+      messages %} {% for category, msg in messages %}
+      <div
+        class="alert alert-{{ category }} alert-dismissible fade show alert-custom"
+        role="alert"
+      >
+        {{ msg }}
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+          aria-label="Close"
+        ></button>
+      </div>
+      {% endfor %} {% endif %} {% endwith %}
+
+      <div class="text-center mt-4">
+        <small
+          >Fai già parte della rete? Vai al
+          <a
+            href="/login"
+            class="small-link"
+            >Login</a
+          >
+        </small>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

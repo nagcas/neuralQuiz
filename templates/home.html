@@ -1,0 +1,36 @@
+{% extends "base.html" %} {% block title %}Home - NeuralNet{% endblock %}
+{%block content %}
+<!-- hero -->
+<section class="hero">
+  <div class="container">
+    <span class="badge-custom">APPRENDIMENTO DELL'IA DI NUOVA GENERAZIONE</span>
+    <h1>Padroneggia il futuro dell'intelligenza artificiale</h1>
+    <p>
+      Metti alla prova le tue conoscenze e resta aggiornato con la piattaforma
+      di quiz sull'intelligenza artificiale più avanzata al mondo. Unisciti a
+      oltre 50.000 ingegneri in tutto il mondo.
+    </p>
+
+    <div class="d-flex justify-content-center gap-3 flex-wrap">
+      {% if username %}
+      <a
+        href="/quiz"
+        class="btn btn-primary-custom"
+      >
+        Inizia il tuo primo quiz
+      </a>
+      {% else %}
+      <a
+        href="/register"
+        class="btn btn-outline-custom"
+      >
+        Registrati
+      </a>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<!-- local insights -->
+<section class="container">{% include "_weather.html" %}</section>
+{% endblock %}

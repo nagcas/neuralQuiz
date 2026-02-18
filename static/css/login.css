@@ -1,0 +1,48 @@
+/* CARD */
+.auth-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 25px;
+  padding: 50px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 0 60px rgba(37, 99, 235, 0.15);
+}
+
+/* INPUT */
+.form-control {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border);
+  color: white;
+  border-radius: 50px;
+  padding: 12px 20px;
+}
+
+.form-control:focus {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--primary);
+  box-shadow: none;
+  color: white;
+}
+
+/* BUTTON */
+.btn-custom {
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  border: none;
+  border-radius: 50px;
+  padding: 14px;
+  font-weight: 600;
+  box-shadow: 0 0 25px rgba(37, 99, 235, 0.4);
+}
+
+.btn-custom:hover {
+  opacity: 0.9;
+}
+
+.small-link {
+  color: var(--primary-light);
+  text-decoration: none;
+}
+
+.small-link:hover {
+  text-decoration: underline;
+}

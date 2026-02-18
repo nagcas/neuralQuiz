@@ -1,0 +1,118 @@
+:root {
+  --primary: #2563eb;
+  --primary-light: #3b82f6;
+  --primary-dark: #1e40af;
+
+  --background: #050b16;
+  --background-soft: #0b1628;
+  --card-bg: #0f1b2e;
+  --border: rgba(255, 255, 255, 0.06);
+
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #acb8c9;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(to right, #0a192f, #112240, #1f4068);
+  color: var(--text-primary);
+}
+
+/* navbar */
+.navbar {
+  background: transparent;
+}
+
+.navbar-custom {
+  backdrop-filter: blur(12px);
+}
+
+.navbar-brand {
+  font-weight: 700;
+  font-size: 1.4rem;
+}
+
+.nav-link {
+  color: var(--text-secondary) !important;
+}
+
+.nav-link:hover {
+  color: white !important;
+}
+
+/* hero */
+.hero {
+  padding: 120px 0;
+  text-align: center;
+}
+
+.badge-custom {
+  background: rgba(37, 99, 235, 0.15);
+  color: var(--primary-light);
+  padding: 8px 16px;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+}
+
+.hero h1 {
+  font-size: 5rem;
+  font-weight: 800;
+  margin: 30px 0;
+}
+
+.hero p {
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto 40px auto;
+}
+
+/* buttons */
+.btn-primary-custom {
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  border: none;
+  padding: 12px 28px;
+  border-radius: 50px;
+  font-weight: 600;
+  text-transform: uppercase;
+  box-shadow: 0 0 25px rgba(37, 99, 235, 0.4);
+}
+
+.btn-primary-custom:hover {
+  background: linear-gradient(135deg, var(--primary-light), var(--primary));
+}
+
+.btn-outline-custom {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  padding: 18px 36px;
+  border-radius: 50px;
+  text-transform: uppercase;
+}
+
+/* section */
+.section-box {
+  background: linear-gradient(to right, #0b1628, #0f1b2e);
+  border-radius: 25px;
+  padding: 40px;
+  margin-top: 60px;
+  border: 1px solid var(--border);
+}
+
+/* alert bootstrap */
+.alert-custom {
+  margin-top: 36px;
+  border-radius: 16px;
+  text-align: center;
+}
+
+/* footer */
+footer {
+  margin-top: 100px;
+  font-size: 1.1rem;
+  padding: 60px 0;
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
+}

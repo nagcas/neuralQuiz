@@ -1,0 +1,23 @@
+/* weather card */
+.weather-card {
+  background: var(--card-bg);
+  border-radius: 20px;
+  padding: 25px;
+  border: 1px solid var(--border);
+  transition: 0.3s ease;
+}
+
+.weather-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--primary);
+}
+
+.weather-card h3 {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.small-text {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
