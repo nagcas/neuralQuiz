@@ -1,24 +1,24 @@
 import os
 import requests
-import sqlite3
+import sqlite3 as sq
 import hashlib
 from datetime import datetime
-from flask import Flask, render_template, request, redirect, url_for, session, flash
+from flask import Flask, render_template, request, redirect, url_for, session, flash, g
 
 app = Flask(__name__)
 
-USERNAME = 'admin'
-PASSWORD = 'admin'
-
 API_KEY_WEATHER = os.getenv('API_KEY_WEATHER')
+DATABASE = 'users.db'
 app.secret_key = os.getenv('SECRET_KEY')
+
 
 # url weather 
 BASE_URL = 'https://api.openweathermap.org/data/2.5/forecast'
 
+
 # init database 
 def init_db():
-    conn = sqlite3.connect("users.db")
+    conn = sq.connect(DATABASE)
     c = conn.cursor()
     c.execute("""
         CREATE TABLE IF NOT EXISTS users (
@@ -33,6 +33,38 @@ def init_db():
 
 init_db()
 
+
+# connect database
+@app.before_request
+def before_request():
+  db = sq.connect(DATABASE)
+  g.db = db
+
+
+# close connect database
+@app.after_request
+def after_request(response):
+  g.db.close()
+  return response
+
+# check password
+def check_password(db, username, hashed_password):
+  cur = db.cursor()
+  cur.execute("SELECT password FROM users WHERE username = ?", (username,))
+  user = cur.fetchone()
+  
+  if user is None:
+    return False
+  
+  return user[0] == hashed_password
+
+# register new user
+def register_user(db, username, hashed_password):
+  cur = db.cursor()
+  cur.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, hashed_password))
+  db.commit()
+  return True
+  
 
 # search city weather
 def get_weather(city):
@@ -126,14 +158,24 @@ def home():
 def login():
   if request.method == 'GET':
     return render_template('login.html')
+  
+  username = request.form['username']
+  password = request.form['password']
+  
+  if not username or not password:
+    flash('Inserisci tutti i campi', 'warning')
+    return redirect(url_for('login'))
+  
+  hashed_password = hashlib.sha256(password.encode('utf-8')).hexdigest()
+      
+  db = g.db
+  if check_password(db, username, hashed_password):
+    session['username'] = username
+    flash('Login effettuato!', 'success')
+    return redirect(url_for('quiz'))
   else:
-    username = request.form['username']
-    password = request.form['password']
-    if username == USERNAME and password == PASSWORD:
-      session['username'] = username
-      return redirect(url_for('quiz'))
-    else:
-      return '<h1>Wrong username or password</h1>'
+    flash('Username o password non corretti!', 'warning')
+    return redirect(url_for('login'))
 
 
 # route user register
@@ -145,16 +187,26 @@ def register():
     username = request.form['username']
     password = request.form['password']
     confirm_password = request.form['confirm_password']
+    
     if not username or not password or not confirm_password:
-      flash('Inserisci username o password!', 'warning')
+      flash('Compila tutti i campi!', 'warning')
+      return redirect(url_for('register'))
+    elif password != confirm_password:
+      flash('Le password non coincidono!', 'danger')
       return redirect(url_for('register'))
     elif username and password == confirm_password:
-      flash('Registrazione avvenuta con successo. Vai al login!', 'success')
-      return redirect(url_for('register'))
+      hashed_password = hashlib.sha256(confirm_password.encode('utf-8')).hexdigest()
+      try:
+        db = g.db
+        if register_user(db, username, hashed_password):
+          flash('Registrazione avvenuta con successo. Vai al login!', 'success')
+          return redirect(url_for('register'))
+      except sq.IntegrityError:
+        flash('Username già esistente', 'info')
+        return redirect(url_for('register'))
     else:
       flash('Le password non coindidono. Riprova!', 'danger')
       return redirect(url_for('register'))
-    # return redirect(url_for('login'))
 
 
 # route logout
@@ -182,11 +234,13 @@ def quiz():
   else:
     return redirect(url_for('login'))
   
+  
 # control session user
 def controlSession():
   if 'username' in session:
     username = session['username']
     return username
+  
   
 if __name__ == '__main__':
   app.run(debug=True)

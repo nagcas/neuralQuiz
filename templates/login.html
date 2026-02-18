@@ -33,6 +33,22 @@ block content %}
         <button class="btn btn-custom w-100">Start</button>
       </form>
 
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if
+      messages %} {% for category, msg in messages %}
+      <div
+        class="alert alert-{{ category }} alert-dismissible fade show alert-custom"
+        role="alert"
+      >
+        {{ msg }}
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+          aria-label="Close"
+        ></button>
+      </div>
+      {% endfor %} {% endif %} {% endwith %}
+
       <div class="text-center mt-4">
         <small
           >Non hai un account?
