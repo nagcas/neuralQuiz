@@ -4,6 +4,8 @@
 
 Questa è una **web app interattiva di quiz** rivolta a un pubblico di adolescenti, sviluppata con **Flask** e **SQLite3**. L’app combina funzionalità di quiz dinamico con previsioni meteo integrate, gestione utenti e classifiche aggiornate.
 
+[Guarda il video](./assets/images/2026-02-19%2010-25-29.mp4)
+
 ---
 
 ## 🛠 Tecnologie utilizzate
