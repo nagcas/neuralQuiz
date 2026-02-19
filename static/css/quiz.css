@@ -1,8 +1,8 @@
-.about {
+.quiz {
   display: block;
   width: 80%;
-  height: 100vh;
-  margin: 120px auto;
+  height: auto;
+  margin: 140px auto;
   background: var(--card-bg);
   border: 1px solid var(--border);
   border-radius: 25px;
@@ -11,7 +11,6 @@
   box-shadow: 0 0 60px rgba(37, 99, 235, 0.15);
 }
 
-.title-about {
-  text-align: center;
-  padding: 36px 0;
+.card-custom {
+  background: transparent;
 }

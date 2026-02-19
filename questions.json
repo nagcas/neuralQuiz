@@ -1,0 +1,122 @@
+[
+  {
+    "question": "Quale libreria Python è utilizzata per il calcolo numerico ad alte prestazioni?",
+    "options": ["NumPy", "Flask", "Requests", "BeautifulSoup"],
+    "answer": "NumPy"
+  },
+  {
+    "question": "Quale libreria è principalmente usata per il machine learning in Python?",
+    "options": ["Scikit-learn", "Matplotlib", "SQLite3", "OS"],
+    "answer": "Scikit-learn"
+  },
+  {
+    "question": "Quale tecnica NLP divide un testo in unità più piccole chiamate token?",
+    "options": [
+      "Tokenizzazione",
+      "Clustering",
+      "Regressione",
+      "Normalizzazione"
+    ],
+    "answer": "Tokenizzazione"
+  },
+  {
+    "question": "Quale architettura è alla base dei modelli moderni di NLP come GPT?",
+    "options": ["Transformer", "Decision Tree", "KNN", "Linear Regression"],
+    "answer": "Transformer"
+  },
+  {
+    "question": "Quale libreria Python è usata per creare grafici di base?",
+    "options": ["Matplotlib", "Pandas", "NLTK", "TensorFlow"],
+    "answer": "Matplotlib"
+  },
+  {
+    "question": "Quale libreria è utilizzata per la computer vision?",
+    "options": ["OpenCV", "Flask", "JSON", "Random"],
+    "answer": "OpenCV"
+  },
+  {
+    "question": "Quale algoritmo è utilizzato per classificazione supervisionata?",
+    "options": ["K-Nearest Neighbors", "K-Means", "PCA", "Apriori"],
+    "answer": "K-Nearest Neighbors"
+  },
+  {
+    "question": "Quale libreria Python è usata per il deep learning insieme a TensorFlow?",
+    "options": ["PyTorch", "Seaborn", "Requests", "SQLite3"],
+    "answer": "PyTorch"
+  },
+  {
+    "question": "Quale tecnica riduce le parole alla loro forma base grammaticale?",
+    "options": [
+      "Lemmatizzazione",
+      "Tokenizzazione",
+      "Vectorizzazione",
+      "Parsing"
+    ],
+    "answer": "Lemmatizzazione"
+  },
+  {
+    "question": "Quale funzione Pandas permette di leggere un file CSV?",
+    "options": ["read_csv()", "load_csv()", "open_csv()", "import_csv()"],
+    "answer": "read_csv()"
+  },
+  {
+    "question": "Quale metodo Flask permette di accedere ai dati di un form HTML?",
+    "options": ["request.form", "session.get", "redirect()", "url_for()"],
+    "answer": "request.form"
+  },
+  {
+    "question": "Quale oggetto Flask viene utilizzato per mantenere dati tra più richieste?",
+    "options": ["session", "request", "flash", "g"],
+    "answer": "session"
+  },
+  {
+    "question": "Quale algoritmo è comunemente usato per clustering non supervisionato?",
+    "options": ["K-Means", "Logistic Regression", "Naive Bayes", "SVM"],
+    "answer": "K-Means"
+  },
+  {
+    "question": "Quale libreria Python permette di effettuare richieste HTTP?",
+    "options": ["Requests", "NumPy", "Flask", "Pandas"],
+    "answer": "Requests"
+  },
+  {
+    "question": "Quale tecnica serve per ridurre la dimensionalità dei dati?",
+    "options": ["PCA", "KNN", "Decision Tree", "Naive Bayes"],
+    "answer": "PCA"
+  },
+  {
+    "question": "Quale algoritmo è utilizzato per regressione supervisionata?",
+    "options": [
+      "Linear Regression",
+      "K-Means",
+      "Apriori",
+      "Clustering Gerarchico"
+    ],
+    "answer": "Linear Regression"
+  },
+  {
+    "question": "Quale libreria Python è ideale per manipolare DataFrame?",
+    "options": ["Pandas", "NumPy", "OpenCV", "TensorFlow"],
+    "answer": "Pandas"
+  },
+  {
+    "question": "Quale funzione Python genera un hash SHA256?",
+    "options": [
+      "hashlib.sha256()",
+      "hashlib.md5()",
+      "hashlib.sha1()",
+      "hash()"
+    ],
+    "answer": "hashlib.sha256()"
+  },
+  {
+    "question": "Quale metodo Pandas mostra le prime righe di un DataFrame?",
+    "options": ["head()", "tail()", "info()", "describe()"],
+    "answer": "head()"
+  },
+  {
+    "question": "Quale libreria Python viene usata per creare API REST leggere?",
+    "options": ["Flask", "Matplotlib", "NLTK", "Seaborn"],
+    "answer": "Flask"
+  }
+]

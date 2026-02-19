@@ -1,9 +1,70 @@
 {% extends "base.html" %} {% block title %}Quiz - NeuralNet{% endblock %} {%
 block content %}
-<section
-  class="container d-flex justify-content-center align-items-center"
-  style="min-height: 100vh"
->
-  <h1>Quiz di {{ username }}</h1>
-</section>
+
+<div class="container py-5 quiz">
+  <!-- Module + Question Counter -->
+  <div
+    class="d-flex flex-column justify-content-center align-items-center mb-2"
+  >
+    <small class="text-primary fw-bold text-uppercase">
+      Module: Python, ML, DL, NLP, computer vision
+    </small>
+    <small class="text-white"> Progress: {{ progress }}% </small>
+  </div>
+
+  <h5 class="text-light mb-3 text-center">
+    Question {{ current_question }} of {{ total_questions }}
+  </h5>
+
+  <!-- Progress Bar -->
+  <div
+    class="progress mb-5"
+    style="height: 6px"
+  >
+    <div
+      class="progress-bar bg-primary"
+      role="progressbar"
+      style="width: {{ progress }} %;"
+    ></div>
+  </div>
+
+  <!-- Quiz Card -->
+  <div class="card bg-transparent text-light shadow-lg border-0 rounded-4 p-4">
+    <h2 class="text-center mb-5 fw-bold">{{ question.question }}</h2>
+
+    <form method="POST">
+      <div class="row g-4">
+        {% for option in question.options %}
+        <div class="col-md-6">
+          <input
+            type="radio"
+            class="btn-check"
+            name="answer"
+            id="option{{ loop.index }}"
+            value="{{ option }}"
+            autocomplete="off"
+            required
+          />
+
+          <label
+            class="btn btn-outline-light w-100 py-3 rounded-5"
+            for="option{{ loop.index }}"
+          >
+            {{ option }}
+          </label>
+        </div>
+        {% endfor %}
+      </div>
+
+      <div class="text-center mt-5">
+        <button
+          type="submit"
+          class="btn btn-primary-custom text-white"
+        >
+          Next Question →
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
 {% endblock %}

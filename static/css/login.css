@@ -1,4 +1,4 @@
-/* CARD */
+/* card */
 .auth-card {
   background: var(--card-bg);
   border: 1px solid var(--border);
@@ -8,9 +8,10 @@
   box-shadow: 0 0 60px rgba(37, 99, 235, 0.15);
 }
 
-/* INPUT */
+/* input */
 .form-control {
   background: rgba(255, 255, 255, 0.05);
+
   border: 1px solid var(--border);
   color: white;
   border-radius: 50px;
@@ -24,7 +25,7 @@
   color: white;
 }
 
-/* BUTTON */
+/* button */
 .btn-custom {
   background: linear-gradient(135deg, var(--primary), var(--primary-light));
   border: none;

@@ -41,6 +41,11 @@ body {
   color: white !important;
 }
 
+.rank-score {
+  color: #f0e771;
+  font-weight: 700;
+}
+
 /* hero */
 .hero {
   padding: 120px 0;
@@ -57,7 +62,7 @@ body {
 }
 
 .hero h1 {
-  font-size: 5rem;
+  font-size: 2rem;
   font-weight: 800;
   margin: 30px 0;
 }
@@ -87,7 +92,7 @@ body {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid var(--border);
   color: var(--text-primary);
-  padding: 18px 36px;
+  padding: 12px 36px;
   border-radius: 50px;
   text-transform: uppercase;
 }
@@ -115,4 +120,11 @@ footer {
   padding: 60px 0;
   border-top: 1px solid var(--border);
   color: var(--text-muted);
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+  .hero h1 {
+    font-size: 5rem;
+  }
 }

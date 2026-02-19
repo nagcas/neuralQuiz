@@ -1,0 +1,41 @@
+.ranking {
+  display: block;
+  width: 80%;
+  height: 100vh;
+  margin: 120px auto;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 25px;
+  padding: 50px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 0 60px rgba(37, 99, 235, 0.15);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.podium-card {
+  transition: transform 0.3s ease;
+}
+
+.podium-card:hover {
+  transform: translateY(-8px);
+}
+
+.first-place {
+  border: 2px solid gold;
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.6);
+}
+
+.second-place {
+  border: 2px solid silver;
+  box-shadow: 0 0 20px rgba(192, 192, 192, 0.6);
+}
+
+.third-place {
+  border: 2px solid #cd7f32;
+  box-shadow: 0 0 20px rgba(205, 127, 50, 0.6);
+}
