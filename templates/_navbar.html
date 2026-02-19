@@ -4,27 +4,28 @@
     class="navbar navbar-expand-lg navbar-dark py-3 fixed-top shadow-lg navbar-custom"
   >
     <div class="container">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="40"
-        height="40"
-        viewBox="0 0 24 24"
-        fill="currentColor"
-        class="icon icon-tabler icons-tabler-filled icon-tabler-meteor me-2"
-      >
-        <path
-          stroke="none"
-          d="M0 0h24v24H0z"
-          fill="none"
-        />
-        <path
-          d="M21.874 3.486l-4.174 7.514h3.3c.846 0 1.293 .973 .791 1.612l-.074 .085l-6.9 7.095a7.5 7.5 0 1 1 -10.21 -10.974l7.746 -6.58c.722 -.614 1.814 .028 1.628 .958l-.577 2.879l7.11 -3.95c.88 -.488 1.849 .481 1.36 1.36m-12.374 7.515a3.5 3.5 0 0 0 -3.495 3.308l-.005 .192a3.5 3.5 0 1 0 3.5 -3.5"
-        />
-      </svg>
       <a
         class="navbar-brand"
         href="/"
-        >NeuralNet</a
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="40"
+          height="40"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          class="icon icon-tabler icons-tabler-filled icon-tabler-meteor me-2"
+        >
+          <path
+            stroke="none"
+            d="M0 0h24v24H0z"
+            fill="none"
+          />
+          <path
+            d="M21.874 3.486l-4.174 7.514h3.3c.846 0 1.293 .973 .791 1.612l-.074 .085l-6.9 7.095a7.5 7.5 0 1 1 -10.21 -10.974l7.746 -6.58c.722 -.614 1.814 .028 1.628 .958l-.577 2.879l7.11 -3.95c.88 -.488 1.849 .481 1.36 1.36m-12.374 7.515a3.5 3.5 0 0 0 -3.495 3.308l-.005 .192a3.5 3.5 0 1 0 3.5 -3.5"
+          />
+        </svg>
+        NeuralNet</a
       >
       <button
         class="navbar-toggler"
@@ -35,7 +36,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div
-        class="collapse navbar-collapse"
+        class="collapse navbar-collapse text-center"
         id="nav"
       >
         <ul class="navbar-nav mx-auto">
@@ -65,31 +66,35 @@
           {% endif %}
         </ul>
         {% if username %}
-        <div class="d-flex justify-content-center align-items-center gap-3">
-          Benvenuto, {{ username }}
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="icon icon-tabler icons-tabler-outline icon-tabler-medal"
-          >
-            <path
-              stroke="none"
-              d="M0 0h24v24H0z"
+        <div
+          class="d-flex flex-column flex-lg-row justify-content-center align-items-center gap-3"
+        >
+          <span class="text-uppercase fw-bold">Benvenuto, {{ username }}</span>
+          <div class="d-flex align-items-center gap-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
               fill="none"
-            />
-            <path d="M12 4v3m-4 -3v6m8 -6v6" />
-            <path
-              d="M12 18.5l-3 1.5l.5 -3.5l-2 -2l3 -.5l1.5 -3l1.5 3l3 .5l-2 2l.5 3.5l-3 -1.5"
-            />
-          </svg>
-          <span class="rank-score">Punteggio: {{ score }}</span>
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="icon icon-tabler icons-tabler-outline icon-tabler-medal"
+            >
+              <path
+                stroke="none"
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path d="M12 4v3m-4 -3v6m8 -6v6" />
+              <path
+                d="M12 18.5l-3 1.5l.5 -3.5l-2 -2l3 -.5l1.5 -3l1.5 3l3 .5l-2 2l.5 3.5l-3 -1.5"
+              />
+            </svg>
+            <span class="rank-score">Punteggio: {{ score }}</span>
+          </div>
           <a
             class="btn btn-outline-custom"
             href="/logout"
@@ -97,14 +102,16 @@
           >
         </div>
         {% else %}
-        <div>
+        <div
+          class="d-flex flex-column flex-lg-row justify-content-center align-items-center gap-4"
+        >
           <a
-            class="nav-link d-inline me-3"
+            class="w-50 w-lg-100 nav-link d-inline btn btn-outline-custom"
             href="/login"
             >Login</a
           >
           <a
-            class="btn btn-primary-custom text-white"
+            class="w-50 w-lg-100 btn btn-primary-custom text-white mx-auto"
             href="/register"
             >Registrati</a
           >

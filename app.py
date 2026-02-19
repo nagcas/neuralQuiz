@@ -167,8 +167,8 @@ def login():
     if request.method == 'GET':
         return render_template('login.html')
   
-    username = request.form['username']
-    password = request.form['password']
+    username = request.form['username'].lower()
+    password = request.form['password'].lower()
   
     if not username or not password:
         flash('Inserisci tutti i campi', 'warning')
@@ -198,8 +198,8 @@ def register():
     if request.method == 'GET':
         return render_template('register.html')
   
-    username = request.form['username']
-    password = request.form['password']
+    username = request.form['username'].lower()
+    password = request.form['password'].lower()
     confirm_password = request.form['confirm_password']
     
     if not username or not password or not confirm_password:
