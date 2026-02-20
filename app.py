@@ -4,20 +4,20 @@ import sqlite3 as sq
 import hashlib
 import json
 import random
-from datetime import datetime
 from flask import Flask, render_template, request, redirect, url_for, session, flash, g
 
 app = Flask(__name__)
 
-API_KEY_WEATHER = os.getenv('API_KEY_WEATHER')
-DATABASE = 'users.db'
-app.secret_key = os.getenv('SECRET_KEY')
-
-# url weather 
-BASE_URL = 'https://api.openweathermap.org/data/2.5/forecast'
+API_KEY_WEATHER = os.getenv("API_KEY_WEATHER")
+DATABASE = "users.db"
+app.secret_key = os.getenv("SECRET_KEY")
 
 
-# init database 
+# url weather
+BASE_URL = "https://api.openweathermap.org/data/2.5/forecast"
+
+
+# init database
 def init_db():
     conn = sq.connect(DATABASE)
     c = conn.cursor()
@@ -32,6 +32,7 @@ def init_db():
     """)
     conn.commit()
     conn.close()
+
 
 init_db()
 
@@ -55,10 +56,10 @@ def check_password(db, username, hashed_password):
     cur = db.cursor()
     cur.execute("SELECT password, score FROM users WHERE username = ?", (username,))
     user = cur.fetchone()
-    
+
     if user is None:
         return False, 0
-    
+
     db_password = user[0]
     db_score = user[1]
 
@@ -71,31 +72,29 @@ def check_password(db, username, hashed_password):
 # register new user
 def register_user(db, username, hashed_password):
     cur = db.cursor()
-    cur.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, hashed_password))
+    cur.execute(
+        "INSERT INTO users (username, password) VALUES (?, ?)",
+        (username, hashed_password),
+    )
     db.commit()
     return True
-  
+
 
 # search city weather
 def get_weather(city):
-    params = {
-        'q': city,
-        'appid': API_KEY_WEATHER,
-        'units': 'metric',
-        'lang': 'it'
-    }
+    params = {"q": city, "appid": API_KEY_WEATHER, "units": "metric", "lang": "it"}
 
     response = requests.get(BASE_URL, params=params)
     if response.status_code != 200:
         return None
 
     data = response.json()
-    city_name = data['city']['name']
+    city_name = data["city"]["name"]
 
     grouped = {}
     # manual grouping by date
-    for item in data['list']:
-        date = item['dt_txt'].split(' ')[0]
+    for item in data["list"]:
+        date = item["dt_txt"].split(" ")[0]
         if date not in grouped:
             grouped[date] = []
         grouped[date].append(item)
@@ -109,123 +108,119 @@ def get_weather(city):
 
         items = grouped[date]
 
-        temps = [x['main']['temp'] for x in items]
+        temps = [x["main"]["temp"] for x in items]
         temp_max = max(temps)
         temp_min = min(temps)
 
         # we are looking for the 12:00 time
-        midday = next((x for x in items if '12:00:00' in x['dt_txt']), items[0])
-        icon = midday['weather'][0]['icon']
+        midday = next((x for x in items if "12:00:00" in x["dt_txt"]), items[0])
+        icon = midday["weather"][0]["icon"]
 
-        forecast.append({
-            'date': date,
-            'temp_day': temp_max,
-            'temp_night': temp_min,
-            'icon': icon
-        })
+        forecast.append(
+            {"date": date, "temp_day": temp_max, "temp_night": temp_min, "icon": icon}
+        )
 
         count += 1
 
-    return {
-        'city': city_name,
-        'forecast': forecast
-    }
+    return {"city": city_name, "forecast": forecast}
 
 
 # route home page
-@app.route('/', methods=['GET', 'POST'])
+@app.route("/", methods=["GET", "POST"])
 def home():
-    if request.method == 'POST':
-        city = request.form.get('city')
+    if request.method == "POST":
+        city = request.form.get("city")
         if not city:
-            flash('Devi inserire una città!', 'warning')
-            return redirect(url_for('home'))
+            flash("Devi inserire una città!", "warning")
+            return redirect(url_for("home"))
     else:
-        city = 'Roma,it'
-  
+        city = "Roma,it"
+
     weather = get_weather(city)
-  
+
     # check if the city exists
     if weather is None:
-        flash('Città non trovata. Controlla il nome.', 'warning')
-        return redirect(url_for('home'))
-  
+        flash("Città non trovata. Controlla il nome.", "warning")
+        return redirect(url_for("home"))
+
     username, score = controlSession()
     if username:
-        return render_template('home.html', weather=weather, username=username, score=score)
-    return render_template('home.html', weather=weather)
+        return render_template(
+            "home.html", weather=weather, username=username, score=score
+        )
+    return render_template("home.html", weather=weather)
 
 
 # route user login
-@app.route('/login', methods=['GET', 'POST'])
+@app.route("/login", methods=["GET", "POST"])
 def login():
     username, _ = controlSession()
-    
+
     if username:
-        return redirect(url_for('home'))
-    
-    if request.method == 'GET':
-        return render_template('login.html')
-  
-    username = request.form['username'].lower()
-    password = request.form['password'].lower()
-  
+        return redirect(url_for("home"))
+
+    if request.method == "GET":
+        return render_template("login.html")
+
+    username = request.form["username"].lower()
+    password = request.form["password"].lower()
+
     if not username or not password:
-        flash('Inserisci tutti i campi', 'warning')
-        return redirect(url_for('login'))
-  
-    hashed_password = hashlib.sha256(password.encode('utf-8')).hexdigest()
-      
+        flash("Inserisci tutti i campi", "warning")
+        return redirect(url_for("login"))
+
+    hashed_password = hashlib.sha256(password.encode("utf-8")).hexdigest()
+
     db = g.db
     valid, score = check_password(db, username, hashed_password)
     if valid:
-        session['username'] = username
-        session['score'] = score
-        return redirect(url_for('ranking'))
+        session["username"] = username
+        session["score"] = score
+        return redirect(url_for("ranking"))
     else:
-        flash('Username o password non corretti!', 'warning')
-        return redirect(url_for('login'))
+        flash("Username o password non corretti!", "warning")
+        return redirect(url_for("login"))
 
 
 # route user register
-@app.route('/register', methods=['GET', 'POST'])
+@app.route("/register", methods=["GET", "POST"])
 def register():
     username, _ = controlSession()
-    
+
     if username:
-        return redirect(url_for('home'))
-    
-    if request.method == 'GET':
-        return render_template('register.html')
-  
-    username = request.form['username'].lower()
-    password = request.form['password'].lower()
-    confirm_password = request.form['confirm_password']
-    
+        return redirect(url_for("home"))
+
+    if request.method == "GET":
+        return render_template("register.html")
+
+    username = request.form["username"].lower()
+    password = request.form["password"].lower()
+    confirm_password = request.form["confirm_password"]
+
     if not username or not password or not confirm_password:
-        flash('Compila tutti i campi!', 'warning')
-        return redirect(url_for('register'))
+        flash("Compila tutti i campi!", "warning")
+        return redirect(url_for("register"))
     elif password != confirm_password:
-        flash('Le password non coincidono!', 'danger')
-        return redirect(url_for('register'))
+        flash("Le password non coincidono!", "danger")
+        return redirect(url_for("register"))
     else:
-        hashed_password = hashlib.sha256(confirm_password.encode('utf-8')).hexdigest()
+        hashed_password = hashlib.sha256(confirm_password.encode("utf-8")).hexdigest()
         try:
             db = g.db
             if register_user(db, username, hashed_password):
-                flash('Registrazione avvenuta con successo. Vai al login!', 'success')
-                return redirect(url_for('register'))
+                flash("Registrazione avvenuta con successo. Vai al login!", "success")
+                return redirect(url_for("register"))
         except sq.IntegrityError:
-            flash('Username già esistente', 'info')
-            return redirect(url_for('register'))
+            flash("Username già esistente", "info")
+            return redirect(url_for("register"))
 
 
 # route logout
-@app.route('/logout')
+@app.route("/logout")
 def logout():
-    session.pop('username', None)
-    session.pop('score', None)
-    return redirect(url_for('home'))
+    session.pop("username", None)
+    session.pop("score", None)
+    return redirect(url_for("home"))
 
 
 # load questions json
@@ -235,55 +230,55 @@ def load_questions():
 
 
 # route quiz page protected
-@app.route('/quiz', methods=['GET', 'POST'])
+@app.route("/quiz", methods=["GET", "POST"])
 def quiz():
     username, db_score = controlSession()
-    
+
     if not username:
-        return redirect(url_for('login'))
+        return redirect(url_for("login"))
 
     questions = load_questions()
 
     # initialize quiz if it doesn't exist in session
-    if 'quiz_questions' not in session:
+    if "quiz_questions" not in session:
         random.shuffle(questions)
-        session['quiz_questions'] = questions
-        session['current'] = 0
-        session['quiz_score'] = 0
+        session["quiz_questions"] = questions
+        session["current"] = 0
+        session["quiz_score"] = 0
 
-    current = session['current']
-    total_questions = len(session['quiz_questions'])
+    current = session["current"]
+    total_questions = len(session["quiz_questions"])
 
     # end quiz
     if current >= total_questions:
-        final_quiz_score = session['quiz_score']
+        final_quiz_score = session["quiz_score"]
         db = g.db
         update_score(db, username, final_quiz_score)
-        session['score'] = db_score + final_quiz_score
+        session["score"] = db_score + final_quiz_score
 
-        session.pop('quiz_questions')
-        session.pop('current')
-        session.pop('quiz_score')
+        session.pop("quiz_questions")
+        session.pop("current")
+        session.pop("quiz_score")
 
-        flash(f'Hai completato il quiz! + {final_quiz_score} punti', 'success')
-        return redirect(url_for('ranking'))
+        flash(f"Hai completato il quiz! + {final_quiz_score} punti", "success")
+        return redirect(url_for("ranking"))
 
-    question = session['quiz_questions'][current]
+    question = session["quiz_questions"][current]
 
     # if I send a reply
-    if request.method == 'POST':
-        selected = request.form.get('answer')
-        if selected == question['answer']:
-            session['quiz_score'] += 1
-        session['current'] += 1
-        return redirect(url_for('quiz'))
+    if request.method == "POST":
+        selected = request.form.get("answer")
+        if selected == question["answer"]:
+            session["quiz_score"] += 1
+        session["current"] += 1
+        return redirect(url_for("quiz"))
 
     progress = int((current / total_questions) * 100)
 
     return render_template(
-        'quiz.html',
+        "quiz.html",
         username=username,
-        score=db_score + session['quiz_score'],
+        score=db_score + session["quiz_score"],
         question=question,
         current_question=current + 1,
         total_questions=total_questions,
@@ -294,22 +289,25 @@ def quiz():
 # update score
 def update_score(db, username, score):
     cur = db.cursor()
-    cur.execute("""
+    cur.execute(
+        """
         UPDATE users
         SET score = score + ?
         WHERE username = ?
-    """, (score, username))
+    """,
+        (score, username),
+    )
     db.commit()
 
 
 # ranking
-@app.route('/ranking')
+@app.route("/ranking")
 def ranking():
     username, score = controlSession()
-    
+
     if not username:
-        return redirect(url_for('login'))
-      
+        return redirect(url_for("login"))
+
     db = g.db
     cur = db.cursor()
     cur.execute("""
@@ -330,18 +328,16 @@ def ranking():
         username=username,
         score=score,
         top_three=top_three,
-        others=others
+        others=others,
     )
-  
+
 
 # control session user
 def controlSession():
-    username = session.get('username')
-    score = session.get('score')
+    username = session.get("username")
+    score = session.get("score")
     return username, score
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run(debug=True)
-
-  
